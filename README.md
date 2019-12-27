@@ -1,18 +1,19 @@
 RFID Blocking PoC
 =================
 
-> How effective are RFID blocking wallets, covers and cards - is there an effordable way to test them?
+> How effective are RFID blocking wallets, covers and cards - is there an affordable way to test them?
 
 # Why the PoC?
 
 * In our daily lives, we are using an increasing amount of RFID/NFC enabled cards (banking, credit card, passport, ID, health insurance etc.).
 * On the one hand, this is very comfortable when performing e.g. contactless payments.
 * On the other hand, one could also become victim to "contactless virtual pitpocketing" or potential data leaks in public space.
+  * Some article about the German ID: https://www.zdnet.de/41533735/neuer-personalausweis-wo-die-wirklichen-gefahren-lauern/ (German)
 * Therefore RFID blocking wallets, covers and cards have been developed - some product examples are:
   * https://www.amazon.de/gp/product/B07RD6RHRD
   * https://www.amazon.de/gp/product/B01NBR9VRD
 
-# An Effordable Way
+# An Affordable Way
 
 * While it is possible to purchase card reading devices in the medium-high price range, there are also some rather cheap GPIO boards (type: "RC522") for the RaspberryPi available.
 * They also come with RFID cards and transponders in kits.
@@ -43,8 +44,8 @@ There are several tutorials/code repos on GitHub out there - a lot of them (incl
 ### Raspberry
 
 * This setup was tested on the following RaspberryPi models:
-  * RaspberryPi2
-  * RaspberryPi4
+  * RaspberryPi 2B (V1.1, 2014)
+  * RaspberryPi 4B (2018)
 
 ### RFID Module
 
@@ -55,24 +56,33 @@ There are several tutorials/code repos on GitHub out there - a lot of them (incl
   * See also: https://en.wikipedia.org/wiki/MIFARE
   * The datasheet of the board can be found here: https://www.nxp.com/docs/en/data-sheet/MFRC522.pdf
   * According to the distributor it is compatible (at least) with the RFID "formats" S50, S70 Ultralight, Pro
+  * The RFID radio frequency is 13.56 MHz (class: "High Frequency"); this standard is used for:
+    * Smart cards (ISO/IEC 15693, ISO/IEC 14443 A, B)
+    * ISO-non-compliant memory cards (Mifare Classic, iCLASS, Legic, Felica ...)
+    * ISO-compatible microprocessor cards (Desfire EV1, Seos)
+    * For further details, refer to: https://en.wikipedia.org/wiki/Radio-frequency_identification#Readers
+    * This standard is also used in the European/German passport (ePass), see: https://events.ccc.de/congress/2005/fahrplan/attachments/650-der_ePass.pdf (German)
 
 ### Wiring & Interface
+
 
 * The board was connected to the Pi via **SPI** (serial peripheral interface):
   * See: https://en.wikipedia.org/wiki/Serial_Peripheral_Interface
   * See also: https://www.raspberrypi.org/documentation/hardware/raspberrypi/spi/README.md
 * The wiring was done according to this tutorial (https://tutorials-raspberrypi.de/raspberry-pi-rfid-rc522-tueroeffner-nfc/):
 
-RF522 Module | Raspberry Pi
------------- | ------------
-SDA	| Pin 24 / GPIO8 (CE0)
-SCK	| Pin 23 / GPIO11 (SCKL)
-MOSI | Pin 19 / GPIO10 (MOSI)
-MISO | Pin 21 / GPIO9 (MISO)
-IRQ	| (not connected)
-GND | Pin6 (GND)
-RST | Pin22 / GPIO25
-3.3V | Pin 1 (3V3)
+
+RF522 Module | Raspberry Pi | Comment
+------------ | ------------ | -------
+SDA	| Pin 24 / GPIO8 (CE0) | Slave Select (Master/Pi selects Slave/RFID module on SPI "bus")
+SCK	| Pin 23 / GPIO11 (SCKL) | Serial Clock (Master/Pi)
+MOSI | Pin 19 / GPIO10 (MOSI) | Data Output (Master/Pi)
+MISO | Pin 21 / GPIO9 (MISO) | Data Output (Slave/RFID module)
+IRQ	| (not connected) | Interrupt, not used here
+GND | Pin6 (GND) | Power
+RST | Pin22 / GPIO25 | Reset "Switch"
+3.3V | Pin 1 (3V3) | Power
+
 
 ## Software
 
@@ -127,4 +137,34 @@ RST | Pin22 / GPIO25
   Successfully installed mfrc522-0.0.7
   ```
 
-# Lesson Learned
+### PoC/Demo Scripts
+
+* Two demo scripts are provided here, one for reading (`Read.py`) and one for writing (`Write.py`) to an RFID card/transponder.
+* The python scripts need to be executed using **sudo** for proper hardware access.
+
+**`Read.py`**
+
+```
+pi@raspberrypi:~ $ sudo python3 Read.py
+
+ID is:1234567891234
+Text is:Your text
+```
+
+**`Write.py`**
+
+```
+pi@raspberrypi:~ $ sudo python3 Write.py
+
+New data:Some text
+Now place your tag to write
+Written
+id: 1234567891234
+text:Some text
+```
+
+# Results
+
+* RFID blocking properties could be confirmed for these products (using the bundled S50 cards):
+  * https://www.amazon.de/gp/product/B07RD6RHRD
+  * https://www.amazon.de/gp/product/B01NBR9VRD
