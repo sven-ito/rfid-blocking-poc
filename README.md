@@ -1,23 +1,26 @@
 RFID Blocking PoC
 =================
 
-> How effective are RFID blocking wallets, covers and cards - is there an affordable way to test them?
+> **How effective are RFID blocking wallets, covers and cards - is there an affordable way to test them?**
 
 # Why the PoC?
 
-* In our daily lives, we are using an increasing amount of RFID/NFC enabled cards (banking, credit card, passport, ID, health insurance etc.).
-* On the one hand, this is very comfortable when performing e.g. contactless payments.
-* On the other hand, one could also become victim to "contactless virtual pitpocketing" or potential data leaks in public space.
-  * Some article about the German ID: https://www.zdnet.de/41533735/neuer-personalausweis-wo-die-wirklichen-gefahren-lauern/ (German)
-* Therefore RFID blocking wallets, covers and cards have been developed - some product examples are:
+* In our daily lives, we are using an increasing amount of **RFID/NFC enabled cards** (banking, credit card, passport, ID, health insurance etc.).
+* On the one hand, this is **very comfortable** when performing e.g. contactless payments.
+* On the other hand, it can also be regarded a **security risk** as one could easily 
+  * become victim to "contactless virtual pitpocketing" or 
+  * could suffer from data leaks in public space.
+  * Some article about the German ID card: https://www.zdnet.de/41533735/neuer-personalausweis-wo-die-wirklichen-gefahren-lauern/ (German)
+* Therefore **RFID blocking** wallets, covers and cards have been developed - some product examples are:
   * https://www.amazon.de/gp/product/B07RD6RHRD
   * https://www.amazon.de/gp/product/B01NBR9VRD
 
 # An Affordable Way
 
-* While it is possible to purchase card reading devices in the medium-high price range, there are also some rather cheap GPIO boards (type: "RC522") for the RaspberryPi available.
+* While it is possible to purchase card reading devices in the medium to high price range, there are also some rather **inexpensive GPIO boards** (type: **RC522**) available.
 * They also come with RFID cards and transponders in kits.
-* This means that for the entire PoC setup, we can stay well below 50 EUR:
+* They can be hooked up to a **RaspberryPi** or an even cheaper microcontroller such as the Arduino.
+* This means that for the entire PoC setup, we can stay within a **budget of below 50 EUR**:
   * https://www.amazon.de/gp/product/B00T2U7R7I (RaspberryPi 2, Zero/Zero WH should also suffice)
   * https://www.amazon.de/gp/product/B074S8MRQ (RC522 Kit, including several boards and cards)
 
@@ -25,13 +28,13 @@ RFID Blocking PoC
 
 ## Tutorials & GitHub Repos
 
-There are several tutorials/code repos on GitHub out there - a lot of them (including the board distributor's) rather describing how to get the module running with Arduino. The most useful to me were:
+There are several tutorials/code repos on GitHub out there. A lot of them (including the board distributor's) are rather describing how to get the module running with Arduino. The most useful to me were:
 
 **GitHub Repos:**
 
-* https://github.com/mxgxw/MFRC522-python (Raspberry/Python2, first steps, basic examples)
-* https://github.com/miguelbalboa/rfid (Arduino/C++, very well documented, many examples)
-* https://github.com/pimylifeup/MFRC522-python (Raspberry/Python3, better logging/debugging also ships as pip library)
+* https://github.com/mxgxw/MFRC522-python (**Raspberry/Python2**, first steps, basic examples)
+* https://github.com/miguelbalboa/rfid (**Arduino/C++**, very well documented, many examples)
+* https://github.com/pimylifeup/MFRC522-python (**Raspberry/Python3**, better logging/debugging also ships as pip library)
 
 **Tutorials:**
 
@@ -44,22 +47,22 @@ There are several tutorials/code repos on GitHub out there - a lot of them (incl
 ### Raspberry
 
 * This setup was tested on the following RaspberryPi models:
-  * RaspberryPi 2B (V1.1, 2014)
-  * RaspberryPi 4B (2018)
+  * RaspberryPi **2B** (V1.1, 2014)
+  * RaspberryPi **4B** (2018)
 
 ### RFID Module
 
-* The used RC522 RFID module was distributed by AZDelivery (https://www.az-delivery.de/)
+* The used RC522 RFID module was distributed by *AZDelivery* (https://www.az-delivery.de/)
   * Amazon Link: https://www.amazon.de/gp/product/B01M28JAAZ
   * ships with an S50 card and transponder
-* The board is apparently based on the Philips MF522-AN board ("MIFARE" by NXP Semiconductors)
+* The board is apparently based on the *Philips MF522-AN chipset* (product: *MIFARE* by *NXP Semiconductors*)
   * See also: https://en.wikipedia.org/wiki/MIFARE
   * The datasheet of the board can be found here: https://www.nxp.com/docs/en/data-sheet/MFRC522.pdf
   * According to the distributor it is compatible (at least) with the RFID "formats" S50, S70 Ultralight, Pro
   * The RFID radio frequency is 13.56 MHz (class: "High Frequency"); this standard is used for:
     * Smart cards (ISO/IEC 15693, ISO/IEC 14443 A, B)
-    * ISO-non-compliant memory cards (Mifare Classic, iCLASS, Legic, Felica ...)
-    * ISO-compatible microprocessor cards (Desfire EV1, Seos)
+    * ISO-non-compliant memory cards (*Mifare Classic, iCLASS, Legic, Felica ...*)
+    * ISO-compatible microprocessor cards (*Desfire EV1, Seos*)
     * For further details, refer to: https://en.wikipedia.org/wiki/Radio-frequency_identification#Readers
     * This standard is also used in the European/German passport (ePass), see: https://events.ccc.de/congress/2005/fahrplan/attachments/650-der_ePass.pdf (German)
 
@@ -88,8 +91,9 @@ RST | Pin22 / GPIO25 | Reset "Switch"
 
 ### Operating System
 
-* Both Raspberries used Raspbian Buster as OS (image: 2019-09-26-raspbian-buster-full).
-  * See: http://downloads.raspberrypi.org/raspbian/images/raspbian-2019-09-30/ (not exact image)
+* Both Raspberries used **Raspbian Buster** as OS (image: 2019-09-26-raspbian-buster-full).
+  * See: http://www.cs.tohoku-gakuin.ac.jp/pub/Linux/RaspBerryPi/2019-09-26-raspbian-buster-full.zip
+  * See also: http://downloads.raspberrypi.org/raspbian/images/raspbian-2019-09-30/ (not exact image)
 * SPI might have to be enabled first. Check if SPI is activated/available:
 
   ```
@@ -104,6 +108,8 @@ RST | Pin22 / GPIO25 | Reset "Switch"
   pi@raspberrypi:~ $ ls /dev/*spi*
   /dev/spidev0.0  /dev/spidev0.1
   ```
+
+* Here is some article how to activate the interface: https://www.raspberrypi-spy.co.uk/2014/08/enabling-the-spi-interface-on-the-raspberry-pi/
 
 ### Python
 
@@ -165,6 +171,6 @@ text:Some text
 
 # Results
 
-* RFID blocking properties could be confirmed for these products (using the bundled S50 cards):
+* RFID blocking properties could be confirmed for these products (using the bundled S50 cards in the setup described above):
   * https://www.amazon.de/gp/product/B07RD6RHRD
   * https://www.amazon.de/gp/product/B01NBR9VRD
