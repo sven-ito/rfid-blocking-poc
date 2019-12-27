@@ -80,29 +80,51 @@ RST | Pin22 / GPIO25
 
 * Both Raspberries used Raspbian Buster as OS (image: 2019-09-26-raspbian-buster-full).
   * See: http://downloads.raspberrypi.org/raspbian/images/raspbian-2019-09-30/ (not exact image)
+* SPI might have to be enabled first. Check if SPI is activated/available:
+
+  ```
+  pi@raspberrypi:~ $ lsmod | grep spi
+  spidev                 20480  0
+  spi_bcm2835            20480  0
+  ```
+
+* Alternatively:
+
+  ```
+  pi@raspberrypi:~ $ ls /dev/*spi*
+  /dev/spidev0.0  /dev/spidev0.1
+  ```
 
 ### Python
 
-* The setup was tested on Python3 (as included with Raspbian).
+* The setup was tested on **Python 3.7** (as included with Raspbian):
+
+  ```
+  pi@raspberrypi:~ $ python3
+  Python 3.7.3 (default, Apr  3 2019, 05:39:12)
+  [GCC 8.2.0] on linux
+  Type "help", "copyright", "credits" or "license" for more information.
+  ```
+
 * The pip library **spidev** was already installed:
 
-```
-pi@raspberrypi:~ $ sudo pip3 install spidev
-Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
-Requirement already satisfied: spidev in /usr/lib/python3/dist-packages (3.3)
-```
+  ```
+  pi@raspberrypi:~ $ sudo pip3 install spidev
+  Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
+  Requirement already satisfied: spidev in /usr/lib/python3/dist-packages (3.3)
+  ```
 
 * The pip library **mfrc522** had to be installed:
 
-```
-pi@raspberrypi:~ $ sudo pip3 install mfrc522
-Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
-Collecting mfrc522
-  Downloading https://files.pythonhosted.org/packages/d5/b5/d33c0634cece0931c3c4e0978b0db58f248045c3b379ccf2d512b76fe044/mfrc522-0.0.7-py3-none-any.whl
-Requirement already satisfied: spidev in /usr/lib/python3/dist-packages (from mfrc522) (3.3)
-Requirement already satisfied: RPi.GPIO in /usr/lib/python3/dist-packages (from mfrc522) (0.7.0)
-Installing collected packages: mfrc522
-Successfully installed mfrc522-0.0.7
-```
+  ```
+  pi@raspberrypi:~ $ sudo pip3 install mfrc522
+  Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
+  Collecting mfrc522
+    Downloading https://files.pythonhosted.org/packages/d5/b5/d33c0634cece0931c3c4e0978b0db58f248045c3b379ccf2d512b76fe044/  mfrc522-0.0.7-py3-none-any.whl
+  Requirement already satisfied: spidev in /usr/lib/python3/dist-packages (from mfrc522) (3.3)
+  Requirement already satisfied: RPi.GPIO in /usr/lib/python3/dist-packages (from mfrc522) (0.7.0)
+  Installing collected packages: mfrc522
+  Successfully installed mfrc522-0.0.7
+  ```
 
 # Lesson Learned
